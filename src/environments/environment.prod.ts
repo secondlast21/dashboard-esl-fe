@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: '/',
+  // apiUrl: '/',
+  apiUrl: 'https://localhost:44313/',
   allowExtesions: [
     {
       type: 'office',
