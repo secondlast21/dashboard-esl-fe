@@ -1,0 +1,428 @@
+<div class="row mb-3 align-items-center justify-content-between">
+  <div class="col-md-auto col-sm-auto">
+    <div class="section-title">
+      <h2>PPM</h2>
+    </div>
+  </div>
+  <div class="col-md-auto col-sm-auto">
+    <h4 class="widget-title">
+      <button
+        class="btn btn-success btn-sm m-right-10"
+        (click)="openModal()"
+      >
+        <i class="las la-plus"></i>
+        Tambah PPM
+      </button>
+    </h4>
+  </div>
+</div>
+
+<div class="row align-items-end justify-content-center mb-4">
+  <div class="col-md-auto col-sm-auto chart-wrapper">
+    <ngx-charts-bar-vertical
+      [results]="namaSingle"
+      legendTitle="Nama"
+      [legendPosition]="'below'"
+      [legend]="true"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabelNama"
+      [yAxisLabel]="yAxisLabelNama"
+    >
+    </ngx-charts-bar-vertical>
+  </div>
+  <div class="col-md-auto col-sm-auto chart-wrapper">
+    <ngx-charts-bar-vertical
+      [results]="jenisPenelitianSingle"
+      legendTitle="Jenis Penelitian"
+      [legendPosition]="'below'"
+      [legend]="true"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabelJenis"
+      [yAxisLabel]="yAxisLabelJenis"
+    >
+    </ngx-charts-bar-vertical>
+  </div>
+</div>
+
+<div class="mat-elevation-z8">
+  <div
+    class="table-container"
+    style="max-width: 100%; overflow-x: auto"
+  >
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      table
+    >
+      <ng-container matColumnDef="nip">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          NIP
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.nip }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nama">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Nama
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.nama }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="jenis_penelitian">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Jenis Penelitian
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.jenis_penelitian }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tahun_usulan">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Tahun Usulan
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.tahun_usulan }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tahun_pelaksanaan">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Tahun Pelaksanaan
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.tahun_pelaksanaan }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bidang_ilmu">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Bidang Ilmu
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.bidang_ilmu }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="jumlah_mhs">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Jumlah Mahasiswa
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.jumlah_mhs }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dana_usulan">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Dana Usulan (Rp)
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.dana_usulan }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="total_dana">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Total Dana (Rp)
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.total_dana }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="mitra">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+        >
+          Mitra Kerjasama
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+        >
+          {{ row.mitra }}
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+  </div>
+  <mat-paginator
+    [length]="dataPpm.totalData"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{ display: display }"
+>
+  <div
+    class="modal-dialog"
+    role="document"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Tambah PPM</h1>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="onCloseHandled()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body custom-modal">
+        <form>
+          <div class="mb-3">
+            <label
+              for="namaDosenPegawai"
+              class="form-label"
+              >Nama Dosen atau Pegawai</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="namaDosenPegawai"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="nipDosenPegawai"
+              class="form-label"
+              >NIP Dosen atau Pegawai</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="nipDosenPegawai"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="jenisPenelitian"
+              class="form-label"
+              >Jenis Penelitian</label
+            >
+            <select
+              class="form-control"
+              aria-label="Status Kepegawaian"
+              id="jenisPenelitian"
+            >
+              <option selected>--Pilih jenis--</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label
+              for="deskripsiPenelitian"
+              class="form-label"
+              >Deskripsi Penelitian</label
+            >
+            <textarea
+              class="form-control"
+              id="deskripsiPenelitian"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label
+              for="tahunUsulan"
+              class="form-label"
+              >Tahun Usulan</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="tahunUsulan"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="tahunPelaksanaan"
+              class="form-label"
+              >Tahun Pelaksanaan</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="tahunPelaksanaan"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="bidangIlmu"
+              class="form-label"
+              >Bidang Ilmu</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="bidangIlmu"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="mahasiswaTerlibat"
+              class="form-label"
+              >Jumlah Keterlibatan Mahasiswa</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="mahasiswaTerlibat"
+              placeholder="10"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="sumberDana"
+              class="form-label"
+              >Sumber Dana</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="sumberDana"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="danaUsulan`"
+              class="form-label"
+              >Dana Usulan</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="danaUsulan`"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="danaDiterima"
+              class="form-label"
+              >Total Dana Diterima</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="danaDiterima"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="mitra"
+              class="form-label"
+              >Mitra Kerjasama</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="mitra"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

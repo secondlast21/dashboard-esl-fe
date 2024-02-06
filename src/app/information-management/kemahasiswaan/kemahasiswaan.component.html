@@ -1,0 +1,464 @@
+<div class="row mb-3 align-items-center justify-content-between">
+  <div class="col-md-auto col-sm-auto">
+    <div class="section-title">
+      <h2>Kemahasiswaan</h2>
+    </div>
+  </div>
+  <div class="col-md-auto col-sm-auto">
+    <h4 class="widget-title">
+      <button
+        class="btn btn-success btn-sm m-right-10"
+        (click)="openModal()"
+      >
+        <i class="las la-plus"></i>
+        Tambah Alumni
+      </button>
+    </h4>
+  </div>
+</div>
+
+<div class="row align-items-end justify-content-center mb-4">
+  <div class="col-md-auto col-sm-auto chart-wrapper">
+    <ngx-charts-bar-vertical
+      [results]="masaTungguKerjaSingle"
+      legendTitle="Masa Tunggu Kerja"
+      [legendPosition]="'below'"
+      [legend]="true"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabelGol"
+      [yAxisLabel]="yAxisLabelGol"
+    >
+    </ngx-charts-bar-vertical>
+  </div>
+  <!-- <div class="col-md-auto col-sm-auto chart-wrapper">
+    <ngx-charts-bar-vertical
+      [results]="jabFungsiSingle"
+      legendTitle="Jabatan Fungsi Terakhir"
+      [legendPosition]="'below'"
+      [legend]="true"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabelJab"
+      [yAxisLabel]="yAxisLabelJab"
+    >
+    </ngx-charts-bar-vertical>
+  </div> -->
+</div>
+
+<div class="mat-elevation-z8">
+  <div
+    class="table-container"
+    style="max-width: 100%; overflow-x: auto"
+  >
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+    >
+      <ng-container matColumnDef="nama">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Nama
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.nama }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tanggal_skl">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Tanggal SKL
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.tanggal_skl }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="alamat_kantor">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Alamat Kantor
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.alamat_kantor }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="no_telp">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Nomor Telepon / HP
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.no_telp }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tempat_kerja">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Tempat Kerja
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.tempat_kerja }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="masa_tunggu_kerja">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Masa Tunggu Kerja
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.masa_tunggu_kerja }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="gaji">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Gaji
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.gaji }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status_pegawai">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Status Kepegawaian
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.status_pegawai }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lingkup_perusahaan">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Lingkup Perusahaan
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.lingkup_perusahaan }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="jenis_perusahaan">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Jenis Perusahaan
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.jenis_perusahaan }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="kelanjutan_studi">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          style="white-space: nowrap; min-width: 160px"
+        >
+          Kelanjutan Studi
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          style="white-space: nowrap; min-width: 160px"
+        >
+          {{ row.kelanjutan_studi }}
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+  </div>
+
+  <mat-paginator
+    [length]="dataAlumni.totalData"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{ display: display }"
+>
+  <div
+    class="modal-dialog"
+    role="document"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Tambah Alumni</h1>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="onCloseHandled()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body custom-modal">
+        <form>
+          <div class="mb-3">
+            <label
+              for="namaAlumni"
+              class="form-label"
+              >Nama Alumni</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="namaAlumni"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="tanggalSkl"
+              class="form-label"
+              >Tanggal SKL</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="tanggalSkl"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="alamatKantor"
+              class="form-label"
+              >Alamat Kantor</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="alamatKantor"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="teleponHP"
+              class="form-label"
+              >Nomor Telepon / HP</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="teleponHP"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="tempatKerja"
+              class="form-label"
+              >Tempat Kerja</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="tempatKerja"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="masaTungguKerja"
+              class="form-label"
+              >Masa Tunggu Kerja 6 Bulan Pertama</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="masaTungguKerja"
+              placeholder="Dalam bulan"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="gaji"
+              class="form-label"
+              >Gaji 1.2x UMR Pertama</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="gaji"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="statusKepegawaian"
+              class="form-label"
+              >Status Kepegawaian</label
+            >
+            <select
+              class="form-control"
+              aria-label="Status Kepegawaian"
+              id="statusKepegawaian"
+            >
+              <option selected>--Pilih status--</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label
+              for="lingkupPerusahaan"
+              class="form-label"
+              >Lingkup Perusahaan</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="lingkupPerusahaan"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="jenisPerusahaan"
+              class="form-label"
+              >Jenis Perusahaan</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="jenisPerusahaan"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="kelanjutanStudi"
+              class="form-label"
+              >Kelanjutan Studi</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="kelanjutanStudi"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+      <!-- <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-default"
+          (click)="onCloseHandled()"
+        >
+          Close
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
