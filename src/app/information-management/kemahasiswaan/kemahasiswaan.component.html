@@ -50,6 +50,23 @@
   </div> -->
 </div>
 
+<!-- Your Angular Component Template  <button style="white-space: pre" (click)="importExcel()">Import File</button> -->
+<input type="file" (change)="onFileChange($event)" />
+<button
+        class="btn btn-success btn-sm m-right-10"
+        (click)="importExcel()"
+      >
+        Import File 
+      </button>
+
+<button
+        class="btn btn-success btn-sm m-right-10"
+        (click)="exportAsExcelFile()"
+      >
+        Export File 
+      </button>
+<br><br>
+
 <div class="mat-elevation-z8">
   <div
     class="table-container"
@@ -269,12 +286,12 @@
     </table>
   </div>
 
-  <mat-paginator
+  <!-- <mat-paginator
     [length]="dataAlumni.totalData"
     [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions"
     (page)="onPageChange($event)"
-  ></mat-paginator>
+  ></mat-paginator> -->
 </div>
 
 <!-- Modal -->

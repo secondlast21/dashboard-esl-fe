@@ -5,13 +5,18 @@ import { MatSort } from '@angular/material/sort'
 import { MatTableDataSource } from '@angular/material/table'
 import { DocumentResource } from '@core/domain-classes/document-resource'
 import { BaseComponent } from 'src/app/base.component'
+import { ExcelService } from './excel.service'
+import * as FileSaver from 'file-saver';
+
+import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'kemahasiswaan',
   templateUrl: './kemahasiswaan.component.html',
   styleUrls: ['./kemahasiswaan.component.scss'],
 })
 export class KemahasiswaanComponent extends BaseComponent implements AfterViewInit {
-  display = 'none'
+  dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = [
     'nama',
     'tanggal_skl',
@@ -25,338 +30,47 @@ export class KemahasiswaanComponent extends BaseComponent implements AfterViewIn
     'jenis_perusahaan',
     'kelanjutan_studi',
   ]
-  dataAlumni = {
-    totalData: 25,
-    data_alumni: [
-      {
-        nama: 'Lorem Ipsum 1',
-        tanggal_skl: '2023-01-01',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456781',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 10,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 2',
-        tanggal_skl: '2023-01-02',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456782',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 10,500,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 3',
-        tanggal_skl: '2023-01-03',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456783',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 11,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 4',
-        tanggal_skl: '2023-01-04',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456784',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 11,500,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 5',
-        tanggal_skl: '2023-01-05',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456785',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 12,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 6',
-        tanggal_skl: '2023-01-06',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456786',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 12,500,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 7',
-        tanggal_skl: '2023-01-07',
-        alamat_kantor: 'IPB University',
-        no_telp: '0123456787',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 13,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 8',
-        tanggal_skl: '2023-01-08',
-        alamat_kantor: 'IPB University',
-        no_telp: '0123456788',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 13,500,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 9',
-        tanggal_skl: '2023-01-09',
-        alamat_kantor: 'IPB University',
-        no_telp: '0123456789',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 14,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 10',
-        tanggal_skl: '2023-01-10',
-        alamat_kantor: 'IPB University',
-        no_telp: '01234567810',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '1 bulan',
-        gaji: 'Rp 14,500,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 11',
-        tanggal_skl: '2023-01-11',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456781',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '2 bulan',
-        gaji: 'Rp 15,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 12',
-        tanggal_skl: '2023-01-12',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456782',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '2 bulan',
-        gaji: 'Rp 16,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 13',
-        tanggal_skl: '2023-01-13',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456783',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '2 bulan',
-        gaji: 'Rp 17,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 14',
-        tanggal_skl: '2023-01-14',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456784',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '2 bulan',
-        gaji: 'Rp 18,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 15',
-        tanggal_skl: '2023-01-15',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456785',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '2 bulan',
-        gaji: 'Rp 19,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 16',
-        tanggal_skl: '2023-01-16',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456786',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '3 bulan',
-        gaji: 'Rp 20,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 17',
-        tanggal_skl: '2023-01-17',
-        alamat_kantor: 'IPB University',
-        no_telp: '0123456787',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '3 bulan',
-        gaji: 'Rp 21,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 18',
-        tanggal_skl: '2023-01-18',
-        alamat_kantor: 'IPB University',
-        no_telp: '0123456788',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '3 bulan',
-        gaji: 'Rp 22,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 19',
-        tanggal_skl: '2023-01-19',
-        alamat_kantor: 'IPB University',
-        no_telp: '0123456789',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '3 bulan',
-        gaji: 'Rp 23,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 20',
-        tanggal_skl: '2023-01-20',
-        alamat_kantor: 'IPB University',
-        no_telp: '01234567810',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '3 bulan',
-        gaji: 'Rp 24,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 21',
-        tanggal_skl: '2023-01-21',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456781',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '3 bulan',
-        gaji: 'Rp 25,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 22',
-        tanggal_skl: '2023-01-22',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456782',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '3 bulan',
-        gaji: 'Rp 26,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 23',
-        tanggal_skl: '2023-01-23',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456783',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '3 bulan',
-        gaji: 'Rp 27,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 24',
-        tanggal_skl: '2023-01-24',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456782',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '2 bulan',
-        gaji: 'Rp 26,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-      {
-        nama: 'Lorem Ipsum 25',
-        tanggal_skl: '2023-01-25',
-        alamat_kantor: 'IPB University',
-        no_telp: '0213456783',
-        tempat_kerja: 'Jakarta',
-        masa_tunggu_kerja: '2 bulan',
-        gaji: 'Rp 27,000,000',
-        status_pegawai: 'Tetap',
-        lingkup_perusahaan: 'Perguruan Tinggi',
-        jenis_perusahaan: 'Negeri',
-        kelanjutan_studi: 'S3'
-      },
-    ]
+
+  constructor(private excelService: ExcelService) {
+    super();
   }
 
-  dataSource = new MatTableDataSource(this.dataAlumni.data_alumni)
+  data: any;
+  dapeg: any;
+  display = 'none'
+
+  onFileChange(evt: any) {
+    const target: DataTransfer = <DataTransfer>(evt.target);
+    if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      const jsonData = XLSX.utils.sheet_to_json(ws);
+      console.log(jsonData);
+      this.excelService.setExcelData(jsonData); // Store data globally
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
+  @ViewChild(MatSort) sort: MatSort
+  @ViewChild(MatPaginator) paginator: MatPaginator
+
+  importExcel() {
+    this.dataSource.data = this.excelService.getExcelData();
+    console.log(this.dataSource.data);
+    this.masaTungguKerjaSingle = this.calculateMasaTungguKerjaDistribution(this.dataSource.data)
+    this.jabFungsiSingle = this.calculateJabatanTerakhirDistribution(this.dataSource.data)
+  }
+
+  exportAsExcelFile(): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Kemahasiswaan');
+    /* save to file */
+    XLSX.writeFile(wb, 'Kemahasiswaan.xlsx');
+  }
 
   showXAxis = true
   showYAxis = true
@@ -372,14 +86,11 @@ export class KemahasiswaanComponent extends BaseComponent implements AfterViewIn
   masaTungguKerjaSingle: any[] = []
   jabFungsiSingle: any[] = []
 
-  @ViewChild(MatSort) sort: MatSort
-  @ViewChild(MatPaginator) paginator: MatPaginator
-
   ngAfterViewInit() {
     this.dataSource.sort = this.sort
     this.dataSource.paginator = this.paginator
-    this.masaTungguKerjaSingle = this.calculateMasaTungguKerjaDistribution(this.dataAlumni.data_alumni)
-    this.jabFungsiSingle = this.calculateJabatanTerakhirDistribution(this.dataAlumni.data_alumni)
+    this.masaTungguKerjaSingle = this.calculateMasaTungguKerjaDistribution(this.dataSource.data)
+    this.jabFungsiSingle = this.calculateJabatanTerakhirDistribution(this.dataSource.data)
   }
 
   pageSizeOptions: number[] = [5, 10, 20]

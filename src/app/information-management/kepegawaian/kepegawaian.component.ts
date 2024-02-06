@@ -8,7 +8,6 @@ import { BaseComponent } from 'src/app/base.component'
 import { ExcelService } from './excel.service'
 import * as FileSaver from 'file-saver';
 
-// Import necessary modules
 import * as XLSX from 'xlsx';
 
 @Component({
