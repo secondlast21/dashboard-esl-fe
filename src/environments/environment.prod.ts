@@ -1,7 +1,6 @@
 export const environment = {
   production: true,
-  // apiUrl: '/',
-  apiUrl: 'https://localhost:44313/',
+  apiUrl: 'https://ids-esl.azurewebsites.net/',
   allowExtesions: [
     {
       type: 'office',
